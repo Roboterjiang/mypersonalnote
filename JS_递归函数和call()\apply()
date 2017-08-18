@@ -1,0 +1,111 @@
+如果一个函数在其主体中直接或间接调用其本身，则这样的函数则称为“递归函数”
+
+function myFun(n){
+    if(n == 1){
+        return 1;
+    }       
+    return n*myFun(n-1);    
+}
+alert("5的阶乘为："+myFun(5));
+
+call()方法和apply()方法
+
+　　Function对象的call()方法和apply()方法可以实现像调用对象的方法一样调用函数。
+
+　　call和apply是为了动态改变this而出现的，当一个object没有某个方法，但其他的有，可以借助call或apply用其他对象的方法来操作
+
+　　call与apply的不同就是call传的值可以是任意的，而apply传的值必须为数组
+  
+function add(a,b){
+             alert(a+b);   
+          }
+          function sub(a,b){
+             alert(a-b);
+          }
+          add.call(sub,3,1);
+          /*用add来替换sub
+          add.call(sub,3,1) == add(3,1)
+          所以运行结果为：alert(4)*/
+                
+function Animal(){    
+        this.name = "Animal";    
+        this.showName = function(){    
+            alert(this.name);    
+        }    
+    }    
+      
+function Cat(){    
+        this.name = "Cat";    
+    }    
+       
+    var animal = new Animal();    
+    var cat = new Cat();    
+        
+    //通过call或apply方法，将原本属于Animal对象的showName()方法交给对象cat来使用了。    
+    //输入结果为"Cat"    
+    animal.showName.call(cat,",");    
+    //animal.showName.apply(cat,[]);  
+    
+    实现继承
+    
+ function Animal(name){      
+        this.name = name;      
+        this.showName = function(){      
+            alert(this.name);      
+        }      
+    }      
+        
+function Cat(name){    
+        Animal.call(this, name);    
+    }      
+        
+    var cat = new Cat("Black Cat");     
+    cat.showName();  
+    
+    多重继承
+    
+    function Class10()  
+    {  
+        this.showSub = function(a,b)  
+        {  
+            alert(a-b);  
+        }  
+    }  
+      
+    function Class11()  
+    {  
+        this.showAdd = function(a,b)  
+        {  
+            alert(a+b);  
+        }  
+    }  
+      
+    function Class2()  
+    {  
+        Class10.call(this);  
+        Class11.call(this);  
+    }  
+JS 求斐波那契函数    
+function fn(n){
+if(n==1|n==2){
+return 1;}
+//因为斐波那契数列格式为：1、1、2、3、5、8、13、21、34、......,n=1和n=2的时候都是输出1
+return fn(n-1)+fn(n-2);
+//不断调用自身函数，n-1是穿进去的参数的前一次，就是最后n的前一个数字。所以n-2是最后传入参数的前两个数字。
+}
+//用函数写出斐波那契数列
+
+var n=parseInt(prompt('请输入一个数字'));
+var a1=1;
+var a2=1;
+var a3=0;
+for(var i=1;i<=n;i++){
+        if(i==1||i==2){
+                    a3=1  
+        }else{
+                a3=a1+a2;//第三个数等于第一个数加上第二个数
+                a1=a2;//第一个数就变成了之前的第二个数
+                a2=a3;//第二个数就变成了刚刚的第三个数
+        }
+        console.log(a3);//使用for循环写出斐波那契数列
+}
